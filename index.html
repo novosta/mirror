@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Mirror</title>
+    <title>Flip Camera</title>
     <style>
         body {
-            margin: 0;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: black;
-        }
-        video {
-            width: 100vw;
             height: 100vh;
-            object-fit: cover;
-            transform: scaleX(-1); /* Mirror the video */
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        video {
+            transform: scaleX(-1); /* Flips the video horizontally */
+            width: 80%;
+            max-width: 600px;
+            border: 2px solid #333;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -25,19 +27,19 @@
     <video autoplay playsinline></video>
 
     <script>
+        const video = document.querySelector("video");
+
         async function startCamera() {
             try {
-                const video = document.querySelector("video");
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 video.srcObject = stream;
-            } catch (err) {
-                console.error("Error accessing camera: ", err);
-                alert("Unable to access the camera. Please allow camera permissions.");
+            } catch (error) {
+                console.error("Error accessing the camera: ", error);
+                alert("Could not access the camera. Please check your permissions.");
             }
         }
 
-        // Start the camera when the page loads
-        window.onload = startCamera;
+        startCamera();
     </script>
 </body>
 </html>
